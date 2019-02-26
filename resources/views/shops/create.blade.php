@@ -2,6 +2,9 @@
 
 @section('contents')
     <h1>商家添加</h1>
+    <link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
+    <script type="text/javascript" src="/webuploader/jquery.js"></script>
+    <script type="text/javascript" src="/webuploader/webuploader.js"></script>
     @include('layout._errors')
     <form method="post" action="{{route('shops.store')}}" enctype="multipart/form-data">
         {{ csrf_field() }}
@@ -21,9 +24,20 @@
         </div>
 
 
+        {{--<div class="form-group">--}}
+            {{--<label>店铺图片</label>--}}
+            {{--<input type="file" name="shop_img">--}}
+        {{--</div>--}}
         <div class="form-group">
             <label>店铺图片</label>
-            <input type="file" name="shop_img">
+            <input type="hidden" name="img" id="img_val">
+            <div id="uploader-demo">
+                <!--用来存放item-->
+                <div id="fileList" class="uploader-list"></div>
+                <div id="filePicker">选择图片</div>
+                <img src="" id="img" width="100"/>
+            </div>
+
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">评分</label>
@@ -94,7 +108,39 @@
 
         <button type="submit" class="btn btn-primary">添加</button>
     </form>
-
+    <script>
+        // 初始化Web Uploader
+        var uploader = WebUploader.create({
+            // 选完文件后，是否自动上传。
+            auto: true,
+            // swf文件路径
+            //swf: '/js/Uploader.swf',
+            // 文件接收服务端。
+            server: '/shopcateupload',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            //设置上传请求参数
+            formData:{
+                _token:'{{ csrf_token() }}'
+            }
+        });
+        //监听上传成功事件
+        uploader.on( 'uploadSuccess', function( file,response ) {
+            // do some things.
+            console.log(response.path);
+            //图片回显
+            $("#img").attr('src',response.path);
+            //图片地址写入隐藏域
+            $("#img_val").val(response.path);
+        });
+    </script>
 @stop
 
 

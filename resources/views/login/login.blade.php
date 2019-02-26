@@ -1,8 +1,8 @@
 @extends('layout.app')
 
 @section('contents')
-    <h1>商家登陆</h1>
-    <form method="post" action="">
+    <h1>管理员登陆</h1>
+    <form method="post" action="{{route('login')}}">
         {{ csrf_field() }}
 
         <div class="form-group">

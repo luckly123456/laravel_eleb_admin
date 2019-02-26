@@ -17,19 +17,21 @@
                 <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
                 <li><a href="#">Link</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">商家管理 <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">用户管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{route('shopcategories.index')}}">商家分类</a></li>
                         <li><a href="{{route('shops.index')}}">商家信息</a></li>
                         <li><a href="{{route('users.index')}}">商家</a></li>
+                        <li><a href="{{route('users.audit')}}">商家审核</a></li>
                         <li><a href="{{route('admins.index')}}">管理员</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">文章管理 <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">商品管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">添加文章</a></li>
-                        <li><a href="#">文章列表</a></li>
+                        <li><a href="{{route('menucategories.index')}}">商品分类</a></li>
+                        <li><a href="{{route('shops.index')}}">商品</a></li>
+                        <li><a href="{{route('activitys.index')}}">活动</a></li>
                     </ul>
                 </li>
             </ul>
@@ -41,7 +43,7 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 @guest
-                <li><a href="#">登录</a></li>
+                <li><a href="{{route('login')}}">登录</a></li>
                 @endguest
                 @auth
                 <li class="dropdown">
@@ -52,7 +54,7 @@
                         <li><a href="#">个人中心</a></li>
                         <li><a href="#">修改密码</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="">退出登录</a></li>
+                        <li><a href="{{route('logout')}}">退出登录</a></li>
                     </ul>
                 </li>
                 @endauth

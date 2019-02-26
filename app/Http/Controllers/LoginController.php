@@ -84,7 +84,12 @@ class LoginController extends Controller
             'shop_id'=>$request->shop_id,
         ]);
         return redirect()->route('login')->with('success','注册成功');
+    }
 
-
+    //用户注销
+    public function destroy()
+    {
+        Auth::logout();//注销登录
+        return redirect()->route('login')->with('success','您已安全退出');
     }
 }

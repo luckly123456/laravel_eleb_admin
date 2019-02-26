@@ -2,7 +2,6 @@
 
 @section('contents')
     <h1>商家表</h1>
-    <a href="{{route('users.audit')}}">商家审核</a>
     <table class="table table-bordered">
         <tr>
             <th>序号</th>
@@ -17,9 +16,10 @@
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                <td>{{ $user->status }}</td>
-                <td>{{ $user->shop_id }}</td>
+                <td>{{ $user->status==1?'启用':'禁用' }}</td>
+                <td>{{ $user->shop->shop_name }}</td>0
                 <td>
+                    <a href="{{ route('users.reset',[$user]) }}" class="btn btn-warning">重置密码</a>
                     <a href="{{ route('users.edit',[$user]) }}" class="btn btn-warning">编辑</a>
                     <form style="display: inline" method="post" action="{{ route('users.destroy',[$user]) }}">
                         {{ csrf_field() }}

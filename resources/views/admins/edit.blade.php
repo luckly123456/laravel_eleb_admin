@@ -4,6 +4,7 @@
     @include('layout._errors')
     <form method="post" action="{{route('admins.update',[$admin])}}" enctype="multipart/form-data">
         {{ csrf_field() }}
+        {{method_field('patch')}}
         <div class="form-group">
             <label for="exampleInputEmail1">用户名</label>
             <input type="text" class="form-control" name="name" value="{{$admin->name}}">

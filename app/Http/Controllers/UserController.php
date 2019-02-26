@@ -6,6 +6,7 @@ use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -101,7 +102,35 @@ class UserController extends Controller
     //审核
     public function audit()
     {
-        return 'asdff';
+            $users = User::where('status', '=', "0")->paginate(10);
+        return view('users.audit', compact('users'));
     }
 
+    //审核
+    public function check(User $user)
+    {
+        $user->status =1;
+        $user->save();
+        $users = User::where('status', '=', "0")->paginate(10);
+        return view('users.audit', compact('users'));
+    }
+
+    public function reset(User $user)
+    {
+        return view('users.reset',compact('user'));
+    }
+
+    public function resetped(User $user,Request $request){
+        $user->password = Hash::make($request->password);
+        return redirect()->route('users.index');
+    }
+
+
+    public function upload(Request $request)
+    {
+        $img = $request->file('file');
+//        $path = Storage::url($img->store('public/menus'));
+        $path = Storage::url($img->store('public/menus'));
+        return ['path'=>$path];
+    }
 }

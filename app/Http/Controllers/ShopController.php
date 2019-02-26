@@ -34,7 +34,6 @@ class ShopController extends Controller
             [
                 'shop_name'=>'required',
                 'shop_category_id'=>'required',
-                'shop_img'=>'required|image|max:2048',
                 'shop_rating'=>'required',
                 'brand'=>'required',
                 'on_time'=>'required',
@@ -50,9 +49,6 @@ class ShopController extends Controller
             [//错误提示信息
                 'shop_name.required'=>'店铺名称不能为空',
                 'shop_category_id.required'=>'所属分类不能为空',
-                'shop_img.required'=>'请上传图片',
-                'shop_img.image'=>'图片格式不正确',
-                'shop_img.max'=>'图片大小不能超过2k',
                 'shop_rating.required'=>'评分不能为空',
                 'brand.required'=>'品牌不能为空',
                 'on_time.required'=>'准时送达不能为空',
@@ -68,15 +64,11 @@ class ShopController extends Controller
 
             ]
         );
-        //获取上传的文件，并保存到服务器
-        $img = $request->file('shop_img');
-        //保存文件
-        $path = $img->store('public/shops');
         Shop::create([
 
             'shop_name'=>$request->shop_name,
             'shop_category_id'=>$request->shop_category_id,
-            'shop_img'=>url(Storage::url($path)),
+            'shop_img'=>$request->img,
             'shop_rating'=>$request->shop_rating,
             'brand'=>$request->brand,
             'on_time'=>$request->on_time,
@@ -107,7 +99,6 @@ class ShopController extends Controller
             [
                 'shop_name'=>'required',
                 'shop_category_id'=>'required',
-                'shop_img'=>'required|image|max:2048',
                 'shop_rating'=>'required',
                 'brand'=>'required',
                 'on_time'=>'required',
@@ -123,9 +114,6 @@ class ShopController extends Controller
             [//错误提示信息
                 'shop_name.required'=>'店铺名称不能为空',
                 'shop_category_id.required'=>'所属分类不能为空',
-                'shop_img.required'=>'请上传图片',
-                'shop_img.image'=>'图片格式不正确',
-                'shop_img.max'=>'图片大小不能超过2k',
                 'shop_rating.required'=>'评分不能为空',
                 'brand.required'=>'品牌不能为空',
                 'on_time.required'=>'准时送达不能为空',
@@ -141,14 +129,9 @@ class ShopController extends Controller
 
             ]
         );
-        //获取上传的文件，并保存到服务器
-        $img = $request->file('shop_img');
-        //保存文件
-        $path = $img->store('public/shops');
-
         $shop->shop_name = $request->shop_name;
         $shop->shop_category_id = $request->shop_category_id;
-        $shop->shop_img = url(Storage::url($path));
+        $shop->shop_img = $request->img;
         $shop->shop_rating = $request->shop_rating;
         $shop->brand = $request->brand;
         $shop->on_time = $request->on_time;
@@ -174,6 +157,14 @@ class ShopController extends Controller
         $shop->delete();
         session()->flash('success','删除成功');
         return redirect()->route('shops.index');
+    }
+
+    public function upload(Request $request)
+    {
+        $img = $request->file('file');
+//        $path = Storage::url($img->store('public/menus'));
+        $path = Storage::url($img->store('public/menus'));
+        return ['path'=>$path];
     }
 
 }

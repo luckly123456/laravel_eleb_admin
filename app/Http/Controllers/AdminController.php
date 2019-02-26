@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -80,6 +81,15 @@ class AdminController extends Controller
         session()->flash('success','删除成功');
         return redirect()->route('admins.index');
     }
-    
+
+    public function reset(Admin $admin)
+    {
+        return view('admins.reset',compact('admin'));
+    }
+
+    public function resetped(Admin $admin,Request $request){
+        $admin->password = Hash::make($request->password);
+        return redirect()->route('admins.index');
+    }
 
 }

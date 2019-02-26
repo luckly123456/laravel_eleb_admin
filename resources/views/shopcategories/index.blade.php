@@ -15,7 +15,7 @@
                 <td>{{ $shopcategorie->id }}</td>
                 <td>{{ $shopcategorie->name }}</td>
                 <td><img src="{{$shopcategorie->img}}" width="50"></td>
-                <td>{{ $shopcategorie->status }}</td>
+                <td>{{ $shopcategorie->status ==1?'启用':'禁用' }}</td>
                 <td>
                     <a href="{{ route('shopcategories.edit',[$shopcategorie]) }}" class="btn btn-warning">修改</a>
                     <form style="display: inline" method="post" action="{{ route('shopcategories.destroy',[$shopcategorie]) }}">
@@ -28,7 +28,7 @@
         @endforeach
     </table>
     {{$shopcategories->links()}}
-    <a href="{{route('shopcategories.create')}}" >添加商品分类</a>
+    <a href="{{route('shopcategories.create')}}" >添加商家分类</a>
 @stop
 
 

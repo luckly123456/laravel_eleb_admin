@@ -25,21 +25,21 @@
         @foreach($shops as $shop)
             <tr>
                 <td>{{ $shop->id }}</td>
-                <td>{{ $shop->shop_category_id }}</td>
+                <td>{{ $shop->shopcategorie->name }}</td>
                 <td>{{ $shop->shop_name }}</td>
                 <td><img src="{{$shop->shop_img}}" width="50"></td>
                 <td>{{ $shop->shop_rating }}</td>
-                <td>{{ $shop->brand }}</td>
-                <td>{{ $shop->on_time }}</td>
-                <td>{{ $shop->fengniao }}</td>
-                <td>{{ $shop->bao }}</td>
-                <td>{{ $shop->piao }}</td>
-                <td>{{ $shop->zhun }}</td>
+                <td>{{ $shop->brand ==1?'是':'否' }}</td>
+                <td>{{ $shop->on_time ==1?'是':'否' }}</td>
+                <td>{{ $shop->fengniao ==1?'是':'否' }}</td>
+                <td>{{ $shop->bao ==1?'是':'否' }}</td>
+                <td>{{ $shop->piao ==1?'是':'否' }}</td>
+                <td>{{ $shop->zhun ==1?'是':'否' }}</td>
                 <td>{{ $shop->start_send }}</td>
                 <td>{{ $shop->send_cost }}</td>
                 <td>{{ $shop->notice }}</td>
                 <td>{{ $shop->discount }}</td>
-                <td>{{ $shop->status }}</td>
+                <td>{{ $shop->status ==1?'启用':'禁用' }}</td>
                 <td>
                     <a href="{{ route('shops.edit',[$shop]) }}" class="btn btn-warning">编辑</a>
                     <form style="display: inline" method="post" action="{{ route('shops.destroy',[$shop]) }}">

@@ -15,6 +15,7 @@
                 <td>{{ $admin->name }}</td>
                 <td>{{ $admin->email }}</td>
                 <td>
+                    <a href="{{ route('admins.reset',[$admin]) }}" class="btn btn-warning">重置密码</a>
                     <a href="{{ route('admins.edit',[$admin]) }}" class="btn btn-warning">编辑</a>
                     <form style="display: inline" method="post" action="{{ route('admins.destroy',[$admin]) }}">
                         {{ csrf_field() }}
