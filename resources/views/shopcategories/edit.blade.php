@@ -7,8 +7,7 @@
     <script type="text/javascript" src="/webuploader/jquery.js"></script>
     <script type="text/javascript" src="/webuploader/webuploader.js"></script>
     <form method="post" action="{{route('shopcategories.update',[$shopcategorie])}}" enctype="multipart/form-data">
-        {{ csrf_field() }}
-        {{method_field('patch')}}
+
         <div class="form-group">
             <label for="exampleInputEmail1">分类名</label>
             <input type="text" class="form-control" name="name" value="{{$shopcategorie->name}}">
@@ -36,6 +35,8 @@
 
         </div>
         <button type="submit" class="btn btn-primary">修改</button>
+        {{ csrf_field() }}
+        {{method_field('patch')}}
     </form>
     <script>
         // 初始化Web Uploader

@@ -8,9 +8,22 @@ use Illuminate\Http\Request;
 class ActivityController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $activitys = Activity::paginate(10);
+        $keyword = $request->keyword;
+        $wheres = [];
+        if ($keyword == 1){
+            $wheres[]=['start_time','>',date('Y-m-d h:m:s')];
+        }elseif ($keyword == 2){
+            $wheres[]=['end_time','>',date('Y-m-d h:m:s')];
+            $wheres[]=['start_time','<',date('Y-m-d h:m:s')];
+        }elseif ($keyword == 3){
+            $wheres[]=['end_time','<',date('Y-m-d h:m:s')];
+        }else{
+            $wheres = [];
+        }
+//        $activitys = Activity::paginate(10);
+        $activitys = Activity::where($wheres)->paginate(10);
         return view('activitys.index',compact('activitys'));
     }
 
@@ -82,6 +95,7 @@ class ActivityController extends Controller
         $request->session()->flash('success','修改成功');
         return redirect()->route('activitys.index');
     }
+
     public function destroy(Activity $activity)
     {
         $activity->delete();

@@ -8,4 +8,9 @@ class Menu extends Model
 {
     //
     protected $fillable = ['goods_name','rating','shop_id','category_id','goods_price','description','month_sales','rating_count','tips','satisfy_count','satisfy_rate','goods_img','status'];
+    public function menucategorie()
+    {
+        return $this->belongsTo(Menucategorie::class,'category_id');
+    }
+
 }

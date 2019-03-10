@@ -111,6 +111,22 @@ class UserController extends Controller
     {
         $user->status =1;
         $user->save();
+
+
+        $title = '全新体验，手机也能玩转网易邮箱2.0';
+        $content = '<p>	重要的邮件如何才能让对方立刻查看随身邮，可以让您享受随时短信提醒和发送邮件可以短信通知收件人的服务，重要的邮件一个都不能少！</p>';
+        try{
+            \Illuminate\Support\Facades\Mail::send('email.default',compact('title','content'),
+                function($message){
+                    $to = '1607384710@qq.com';
+                    $message->from(env('MAIL_USERNAME'))->to($to)->subject('饿了吧商家审核啦');
+                });
+        }catch (Exception $e){
+            return '邮件发送失败';
+        }
+
+
+
         $users = User::where('status', '=', "0")->paginate(10);
         return view('users.audit', compact('users'));
     }

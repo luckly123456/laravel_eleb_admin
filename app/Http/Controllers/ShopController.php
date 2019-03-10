@@ -6,19 +6,20 @@ use App\Models\Shop;
 use App\Models\Shopcategorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Monolog\Handler\SamplingHandler;
 
 class ShopController extends Controller
 {
     //
-    public function index(Request $request)
+    public function index()
     {
-        $keyword = $request->keyword;
-        //dd($keyword);
-        if ($keyword) {
-            $shops = Shop::where('title', 'like', "%$keyword%")->paginate(10);
-        } else {
-            $shops = Shop::paginate(10);
-        }
+//        $keyword = $request->keyword;
+//        //dd($keyword);
+//        if ($keyword) {
+//            $shops = Shop::where('title', 'like', "%$keyword%")->paginate(10);
+//        } else {
+        $shops = Shop::paginate(10);
+//        }
         return view('shops.index', compact('shops', 'keyword'));
     }
 
@@ -162,9 +163,14 @@ class ShopController extends Controller
     public function upload(Request $request)
     {
         $img = $request->file('file');
-//        $path = Storage::url($img->store('public/menus'));
-        $path = Storage::url($img->store('public/menus'));
+        $path = Storage::url($img->store('public/shops'));
         return ['path'=>$path];
     }
+
+//    public function show(Shop $shop)
+//    {
+////        $shops = Shop::where('shop_id', '=', "$shop")->paginate(10);
+//        return 'asf';
+//    }
 
 }

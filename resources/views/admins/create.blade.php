@@ -17,6 +17,13 @@
             <label for="exampleInputEmail1">邮箱</label>
             <input type="email" class="form-control" name="email" placeholder="请输入邮箱">
         </div>
+        <div>
+            @foreach($roles as $role)
+                <input type="checkbox" name="roles[]" value="{{$role->name}}"> {{$role->name}}</label>
+
+            @endforeach
+
+        </div>
         <button type="submit" class="btn btn-primary">添加</button>
     </form>
 

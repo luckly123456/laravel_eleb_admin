@@ -6,24 +6,26 @@ use App\Models\Admin;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
     //
     public function index(Request $request)
     {
-        $keyword = $request->keyword;
-        if ($keyword) {
-            $admins = Admin::where('title', 'like', "%$keyword%")->paginate(10);
-        } else {
+//        $keyword = $request->keyword;
+//        if ($keyword) {
+//            $admins = Admin::where('title', 'like', "%$keyword%")->paginate(10);
+//        } else {
             $admins = Admin::paginate(10);
-        }
+//        }
         return view('admins.index', compact('admins', 'keyword'));
     }
 
     public function create()
     {
-        return view('admins.create');
+        $roles = Role::get();
+        return view('admins.create',compact('roles'));
     }
 
     public function store(Request $request)
@@ -40,12 +42,18 @@ class AdminController extends Controller
                 'email.required'=>'邮箱不能为空',
             ]
         );
-        Admin::create([
+//        Admin::create([
+//            'name'=>$request->name,
+//            'password'=>Hash::make($request->password),
+//            'email'=>$request->email,
+//        ]);
+        $admin = new Admin();
+        $admin->name = $request->name;
+        $admin->password = Hash::make($request->password);
+        $admin->email = $request->email;
+        $admin->save();
 
-            'name'=>$request->name,
-            'password'=>Hash::make($request->password),
-            'email'=>$request->email,
-        ]);
+        $admin->syncRoles([$request->roles]);
         return redirect()->route('admins.index')->with('success','添加成功');
     }
 
@@ -71,6 +79,7 @@ class AdminController extends Controller
         );
         $admin->name = $request->name;
         $admin->email = $request->email;
+        $admin->syncRoles([$request->roles]);
         return redirect()->route('admins.index')->with('success','添加成功');
     }
 

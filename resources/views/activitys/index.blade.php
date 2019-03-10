@@ -2,6 +2,18 @@
 
 @section('contents')
     <h1>活动</h1>
+    <form class="form-inline" action="{{route('activitys.index')}}">
+        <div class="form-group">
+            <label>搜索</label>
+            <select name="keyword" class="form-control" style="width: 200px">
+                    <option value="0">所有</option>
+                    <option value="1">未开始</option>
+                    <option value="2">进行中</option>
+                    <option value="3">已结束</option>
+            </select>
+            <button type="submit" class="btn btn-primary">搜索</button>
+        </div>
+    </form>
     <table class="table table-bordered">
         <tr>
             <th>序号</th>
@@ -15,7 +27,7 @@
             <tr>
                 <td>{{ $activity->id }}</td>
                 <td>{{ $activity->title }}</td>
-                <td>{{ $activity->content }}</td>
+                <td>{!! $activity->content !!}</td>
                 <td>{{ $activity->start_time }}</td>
                 <td>{{ $activity->end_time }}</td>
                 <td>

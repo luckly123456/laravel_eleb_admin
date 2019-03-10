@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Shop;
 use App\Models\Shopcategorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -9,16 +10,11 @@ use Illuminate\Support\Facades\Storage;
 class ShopcategoriesController extends Controller
 {
     //
-    public function index(Request $request)
+    public function index()
+
     {
-        $keyword = $request->keyword;
-        //dd($keyword);
-        if($keyword){
-            $shopcategories = Shopcategorie::where('title','like',"%$keyword%")->paginate(10);
-        }else{
-            $shopcategories = Shopcategorie::paginate(10);
-        }
-        return view('shopcategories.index',compact('shopcategories','keyword'));
+        $shopcategories = Shopcategorie::paginate(10);
+        return view('shopcategories.index',compact('shopcategories'));
     }
 
     //添加商品分类
@@ -51,8 +47,10 @@ class ShopcategoriesController extends Controller
 
     //修改商品分类
     public function edit(Shopcategorie $shopcategorie)
+
     {
         return view('shopcategories.edit',compact('shopcategorie'));
+
     }
     //修改保存
     public function update(Shopcategorie $shopcategorie,Request $request)
@@ -88,8 +86,14 @@ class ShopcategoriesController extends Controller
     public function upload(Request $request)
     {
         $img = $request->file('file');
-//        $path = Storage::url($img->store('public/menus'));
-        $path = Storage::url($img->store('public/menus'));
+        $path = Storage::url($img->store('public/shopcategories'));
         return ['path'=>$path];
+    }
+
+    public function show(Shopcategorie $shopcategorie,Request $request){
+//        $shops = Shop::where('shop_category_id','=',"$shopcategorie")->paginate(10);
+
+        $shops = Shop::where('shop_category_id','=',"$shopcategorie->id")->paginate(10);
+        return $shopcategorie;
     }
 }

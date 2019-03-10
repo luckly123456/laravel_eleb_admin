@@ -17,7 +17,7 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->status==1?'启用':'禁用' }}</td>
-                <td>{{ $user->shop->shop_name }}</td>0
+                <td>{{ $user->shop->shop_name??'暂时没有商家信息' }}</td>
                 <td>
                     <a href="{{ route('users.reset',[$user]) }}" class="btn btn-warning">重置密码</a>
                     <a href="{{ route('users.edit',[$user]) }}" class="btn btn-warning">编辑</a>

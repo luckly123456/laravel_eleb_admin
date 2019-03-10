@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('contents')
-    <h1>商品分类表</h1>
+    <h1>商家分类表</h1>
     <table class="table table-bordered">
         <tr>
             <th>序号</th>
@@ -13,7 +13,10 @@
         @foreach($shopcategories as $shopcategorie)
             <tr>
                 <td>{{ $shopcategorie->id }}</td>
-                <td>{{ $shopcategorie->name }}</td>
+                <td>
+                    {{--<a href="{{ route('shopcategories.show',[$shopcategorie]) }}">{{ $shopcategorie->name }}</a>--}}
+                    {{ $shopcategorie->name }}
+                </td>
                 <td><img src="{{$shopcategorie->img}}" width="50"></td>
                 <td>{{ $shopcategorie->status ==1?'启用':'禁用' }}</td>
                 <td>
@@ -28,7 +31,11 @@
         @endforeach
     </table>
     {{$shopcategories->links()}}
-    <a href="{{route('shopcategories.create')}}" >添加商家分类</a>
+
+
+    @if(auth()->user()->can('shopcategories.create'))
+        <a href="{{route('shopcategories.create')}}" >添加商家分类</a>
+    @endif
 @stop
 
 
